@@ -12,7 +12,7 @@ def tile_left():
 def tile_right():
     active_window = sp.check_output(["xdotool", "getactivewindow"]).decode("UTF-8")
     sp.run(["xdotool", "windowmove", active_window, "963", "43"])
-    sp.run(["xdotool", "windowsize", active_window, "983", "1005"]) 
+    sp.run(["xdotool", "windowsize", active_window, "983", "1005"])
 
 
 try:
@@ -23,6 +23,3 @@ try:
 
 except IndexError:
     print('Please, provide "left" or "right" as an argument')
-
-
-
