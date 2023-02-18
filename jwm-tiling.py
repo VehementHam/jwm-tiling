@@ -3,16 +3,30 @@ import sys
 import subprocess as sp
 
 
+SCREEN_RESOLUTION = [int(value) for value in (sp
+    .check_output(["xrandr | grep '*' | tr -s ' ' | cut -d ' ' -f 2"],
+                  shell=True)
+    .decode("UTF-8")
+    .strip()
+    .split("x")
+)]
+
+BAR_HEIGHT = 21
+
+GAP_SIZE = 4
+
+
+ACTIVE_WINDOW = sp.check_output(["xdotool", "getactivewindow"]).decode("UTF-8")
+
+
 def tile_left():
-    active_window = sp.check_output(["xdotool", "getactivewindow"]).decode("UTF-8")
-    sp.run(["xdotool", "windowmove", active_window, "5", "43"])
-    sp.run(["xdotool", "windowsize", active_window, "983", "1005"])
+    sp.run(["xdotool", "windowmove", ACTIVE_WINDOW, "5", "43"])
+    sp.run(["xdotool", "windowsize", ACTIVE_WINDOW, "983", "700"])
 
 
 def tile_right():
-    active_window = sp.check_output(["xdotool", "getactivewindow"]).decode("UTF-8")
-    sp.run(["xdotool", "windowmove", active_window, "963", "43"])
-    sp.run(["xdotool", "windowsize", active_window, "983", "1005"])
+    sp.run(["xdotool", "windowmove", ACTIVE_WINDOW, "500", "43"])
+    sp.run(["xdotool", "windowsize", ACTIVE_WINDOW, "983", "700"])
 
 
 try:
@@ -22,4 +36,5 @@ try:
         tile_right()
 
 except IndexError:
-    print('Please, provide "left" or "right" as an argument')
+    print(SCREEN_RESOLUTION)
+    # print('Please, provide "left" or "right" as an argument')
